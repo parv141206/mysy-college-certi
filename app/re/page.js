@@ -1,7 +1,7 @@
 "use client";
 import { useEffect, useState } from "react";
-import GenerateDoc from "./components/GenerateDoc";
-
+import GenerateDoc from "../components/GenerateDoc";
+import GenerateDoc2 from "../components/GenerateDoc2";
 export default function Home() {
   const branch = [
     "Computer Engineering",
@@ -57,7 +57,7 @@ export default function Home() {
         </select>{" "}
         in our hostel.
       </div> */}
-      <GenerateDoc />
+      <GenerateDoc2 />
     </main>
   );
 }
