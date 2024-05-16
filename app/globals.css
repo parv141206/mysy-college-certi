@@ -2,7 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 input {
-  @apply p-1 rounded-md outline-none hover:outline-none active:outline-none border-black border-opacity-25 border;
+  @apply p-1 rounded-md m-1 outline-none hover:outline-none active:outline-none border-black border-opacity-25 border;
 }
 label {
   @apply font-bold text-blue-600;

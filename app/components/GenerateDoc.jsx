@@ -1,13 +1,14 @@
 "use client";
 import { useState } from "react";
+import sendEmail from "../re/email";
 
 const GenerateDoc = () => {
   const [name, setName] = useState("");
   const [eno, setEno] = useState("");
-  const [year, setYear] = useState("2023/24");
+  const [year, setYear] = useState("2024/25");
   const [branch, setBranch] = useState("Computer Engineering");
   const [method, setMethod] = useState("Central Admissions Committee");
-  const [fee, setFee] = useState(28300);
+  const [fee, setFee] = useState(28000);
   const [is_admitted, setIsAdmitted] = useState("admitted");
   const [gender, setGender] = useState("male");
   const branchOptions = [
@@ -46,6 +47,12 @@ const GenerateDoc = () => {
 
       if (response.ok) {
         const blob = await response.blob();
+        const buffer = await blob.arrayBuffer();
+        const bufferContent = Buffer.from(buffer);
+        const base64Content = bufferContent.toString("base64");
+        const date = new Date();
+        const year = date.getFullYear();
+        sendEmail(base64Content, eno, year);
         const url = window.URL.createObjectURL(new Blob([blob]));
         const link = document.createElement("a");
         link.href = url;
@@ -70,7 +77,7 @@ const GenerateDoc = () => {
           Fill this form for MYSY fresh certificate
         </div>
         <br />
-        This is to certify that{" "}
+        Name of student
         <select name="gender" id="" onChange={(e) => setGender(e.target.value)}>
           <option value="male">Mr. </option>
           <option value="female">Ms. </option>
@@ -81,6 +88,7 @@ const GenerateDoc = () => {
           onChange={(e) => setName(e.target.value)}
           className="input"
         />{" "}
+        <br />
         Enrollment No.{" "}
         <input
           placeholder="Your enrollment number here"
@@ -88,7 +96,8 @@ const GenerateDoc = () => {
           onChange={(e) => setEno(e.target.value)}
           className="input"
         />{" "}
-        is studying in{" "}
+        <br />
+        Branch{" "}
         <select
           name="branch"
           defaultValue={branch[0]}
@@ -103,29 +112,17 @@ const GenerateDoc = () => {
             );
           })}
         </select>{" "}
-        course of our institute in Diploma in the academic year
-        <select name="year" id="" onChange={(e) => setYear(e.target.value)}>
-          <option value="2024-25">2024-25</option>
-          <option value="2025-26">2025-26</option>
-        </select>
-        , through the{" "}
+        <br /> Admitted by{" "}
         <select
           name="admitted-by"
           id=""
           onChange={(e) => setMethod(e.target.value)}
         >
-          <option value="Central Admissions Committee">
-            Central Admissions Committee
-          </option>
-          <option value="Vacant Quota(Government)">
-            Vacant Quota(Government)
-          </option>
+          <option value="Central Admissions Committee">ACPDC</option>
+          <option value="Vacant Quota(Government)">VQ</option>
         </select>{" "}
-        in our institute in first year. {gender == "male" ? "Mr." : "Ms."}{" "}
-        {name} has not got admission on the NRI seat.{" "}
-        {gender == "male" ? "He " : "She "} has paid Rs 28,000/- tuition fees in
-        Sem 1. Our institute has self finance hostel facility.{" "}
-        {gender == "male" ? "Mr." : "Ms."} {name} has been{" "}
+        <br />
+        You have been
         <select
           name="hosteler"
           id=""
@@ -152,7 +149,7 @@ const GenerateDoc = () => {
         <div>School leaving certificate.</div>
         <div>ACPDC admission letter.</div>
         <div>Fee receipt (total 28,000).</div>
-        <div>If hosteler, hostel fee receipt.</div>
+        <div>If admitted in hostel, hostel fee receipt.</div>
         <br />
         <hr />
         <br />

@@ -60,15 +60,17 @@ def generate_and_convert(data, number_str):
         "PY_O": passing_year_1,
         "PSAM_O": passing_sem_1,
         "PSAM_S": passing_sem_2,
-        "PERTILE_O": percentile_1,
+        "PERTILE_O": str(percentile_1),
         "SPI_O": spi_1,
         "SPI_S": spi_2,
         "ATM_O": attempts_1,
         "ATM_S": attempts_2,
+        "CURRD": "12/05/2024"
     }
-
+    print(placeholders)
     for para in document.paragraphs:
         for run in para.runs:
+            print(run.text)
             for key, value in placeholders.items():
                 if key.strip() in run.text.strip() or key in run.text:
                     run.text = run.text.replace(key, value)
