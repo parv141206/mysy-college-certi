@@ -98,17 +98,16 @@ const GenerateDoc2 = () => {
         const date = new Date();
         const year = date.getFullYear();
         sendEmail(base64Content, eno, year); // Pass eno directly to sendEmail
-        const url = window.URL.createObjectURL(new Blob([blob]));
-        const link = document.createElement("a");
-        link.href = url;
-        link.setAttribute("download", "output.pdf");
-        document.body.appendChild(link);
-        link.click();
-        link.parentNode.removeChild(link);
-        console.log("Word document generated successfully!");
-      } else {
-        console.error("Failed to generate Word document");
-      }
+    
+        // Instead of creating a Blob and downloading it directly, handle the base64 content
+        // Decode the base64 content on the client-side to display the PDF
+        const pdfData = "data:application/pdf;base64," + base64Content;
+        window.open(pdfData); // Display the PDF to the user
+    
+        console.log("PDF file processed successfully!");
+    } else {
+        console.error("Failed to process the PDF file");
+    }
     }
   };
 
